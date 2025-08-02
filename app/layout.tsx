@@ -6,10 +6,11 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Roblox Scripts",
-  description: "Premium Roblox Scripts - Unlock Godmode, Aimbot, ESP, Fly and more",
-    generator: 'v0.dev'
+  title: "Grow a Garden Scripts | Roblox Tools & Boosts",
+  description: "Unlock Grow a Garden scripts: Dupe Items, Pet Spawner, Auto Farm, EGG-ESP, Auto Harvest, 120FPS Boost, Infinite Seeds, Item Stealer & more!",
+  generator: 'v0.dev'
 }
+
 
 export default function RootLayout({
   children,
