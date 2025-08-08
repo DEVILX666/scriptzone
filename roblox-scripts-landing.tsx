@@ -1,15 +1,16 @@
 "use client"
 
-import type React from "react"
-import { useState, useEffect, useRef, memo } from "react"
-import { Download, Shield, Lock, Zap } from 'lucide-react'
-import { motion } from "framer-motion"
-import Image from "next/image"
+import type React from "react";
+import { useState, useRef, memo } from "react";
+import { Loader2, Download, CheckCircle, Shield, Lock, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Head from "next/head";
 
+// Declare the global AdBlueMedia function
 declare global {
   interface Window {
-    _Pg?: () => void
-    [key: string]: any
+    _Pg: () => void;
   }
 }
 
@@ -18,88 +19,50 @@ const MemoizedBadge = memo(({ icon, text }: { icon: React.ReactNode; text: strin
   <div className="bg-[#00ff88]/10 backdrop-blur-sm px-5 py-2 rounded-xl text-sm flex items-center gap-2 border border-[#00ff88]/20 hover:bg-[#00ff88]/15 transition-colors duration-300">
     {icon} {text}
   </div>
-))
-MemoizedBadge.displayName = "MemoizedBadge"
+));
+MemoizedBadge.displayName = "MemoizedBadge";
+
+const MemoizedFeature = memo(({ icon, name }: { icon: string; name: string }) => (
+  <div className="bg-gradient-to-br from-white/5 to-white/10 p-4 rounded-xl text-center border border-white/10 hover:transform hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_5px_15px_rgba(0,255,136,0.15)] group">
+    <div className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">{icon}</div>
+    <div className="font-medium">{name}</div>
+  </div>
+));
+MemoizedFeature.displayName = "MemoizedFeature";
 
 export default function RobloxScriptsLanding() {
-  const [opening, setOpening] = useState(false)
-  const [lockerReady, setLockerReady] = useState(false)
-  const particlesRef = useRef<HTMLDivElement>(null)
-  const scriptAddedRef = useRef(false)
+  const [downloading, setDownloading] = useState(false);
+  const particlesRef = useRef<HTMLDivElement>(null);
 
-  // Load AdBlueMedia script and config on the client
-  useEffect(() => {
-    if (scriptAddedRef.current) return
-    scriptAddedRef.current = true
-
-    // Inject the init variable:
-    // <script type="text/javascript">var FBPFn_bCg_FAiHkc={"it":4485431,"key":"072db"};</script>
-    try {
-      window["FBPFn_bCg_FAiHkc"] = { it: 4485431, key: "072db" }
-    } catch {
-      // ignore
-    }
-
-    // Inject the external locker script:
-    // <script src="https://dfmpe7igjx4jo.cloudfront.net/f99b35d.js"></script>
-    const s = document.createElement("script")
-    s.src = "https://dfmpe7igjx4jo.cloudfront.net/f99b35d.js"
-    s.async = true
-    s.crossOrigin = "anonymous"
-    s.onload = () => {
-      setLockerReady(typeof window._Pg === "function")
-    }
-    s.onerror = () => {
-      setLockerReady(false)
-      console.error("AdBlueMedia script failed to load.")
-    }
-    document.body.appendChild(s)
-
-    return () => {
-      setLockerReady(false)
-    }
-  }, [])
-
-  // Motion variants
   const fadeInVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
-
-  const handleOpenLocker = () => {
-    if (!lockerReady) return
-    setOpening(true)
-    try {
-      // Open when button is pressed: <script>_Pg();</script>
-      window._Pg?.()
-    } catch (e) {
-      console.error("Failed to open locker:", e)
-    } finally {
-      setTimeout(() => setOpening(false), 1500)
-    }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
-      {/* Mobile-optimized background effects */}
-      <div className="fixed inset-0 z-0">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a1a] to-[#0a1a0a] animate-gradient"></div>
+      {/* ✅ AdBlueMedia Locker Scripts */}
+      <Head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `var FBPFn_bCg_FAiHkc = { it: 4485431, key: "072db" };`,
+          }}
+        />
+        <script src="https://dfmpe7igjx4jo.cloudfront.net/f99b35d.js" />
+      </Head>
 
-        {/* Subtle floating orbs - mobile optimized */}
+      {/* Background effects */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a1a] to-[#0a1a0a] animate-gradient"></div>
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#00ff88]/20 rounded-full animate-float-slow"></div>
         <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-[#8a2be2]/30 rounded-full animate-float-medium"></div>
         <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-[#00bfff]/25 rounded-full animate-float-fast"></div>
-
-        {/* Gentle glow effect */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-radial from-[#00ff88]/5 to-transparent animate-pulse-slow"></div>
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-radial from-[#8a2be2]/5 to-transparent animate-pulse-medium"></div>
       </div>
 
-      {/* Floating Particles - optimized for mobile */}
       <div ref={particlesRef} className="particles fixed w-full h-full top-0 left-0 z-0 pointer-events-none"></div>
 
-      {/* Main Content - always visible */}
       <motion.div
         className="container max-w-4xl mx-auto px-6 py-16 relative z-10"
         initial="hidden"
@@ -142,7 +105,7 @@ export default function RobloxScriptsLanding() {
             UNLOCK ALL PREMIUM GROW A GARDEN SCRIPTS NOW! 🔥
           </motion.p>
 
-          {/* Download Button -> opens AdBlueMedia locker via _Pg() */}
+          {/* ✅ Updated download button */}
           <motion.div
             className="mt-8 mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -150,33 +113,34 @@ export default function RobloxScriptsLanding() {
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             <motion.button
-              onClick={handleOpenLocker}
-              disabled={!lockerReady || opening}
+              onClick={() => {
+                setDownloading(true);
+                setTimeout(() => {
+                  if (typeof window !== "undefined" && typeof window._Pg === "function") {
+                    window._Pg(); // ✅ AdBlueMedia locker opens here
+                  } else {
+                    console.error("AdBlueMedia locker script not loaded.");
+                  }
+                }, 2000);
+              }}
+              disabled={downloading}
               className={`
-                inline-block px-12 py-5 text-2xl font-bold text-black 
+                inline-block px-12 py-5 text-2xl font-bold text-black
                 bg-gradient-to-r from-[#8a2be2] via-[#00bfff] to-[#00ff88]
                 rounded-xl shadow-lg hover:shadow-[0_0_40px_rgba(0,255,136,0.5)]
                 transition-all duration-300 relative overflow-hidden
-                ${opening || !lockerReady ? "opacity-60 cursor-not-allowed" : "hover:scale-105"}
+                hover:scale-105
+                ${downloading ? "opacity-60 cursor-not-allowed" : ""}
               `}
-              whileHover={{ scale: opening || !lockerReady ? 1 : 1.05 }}
-              whileTap={{ scale: opening || !lockerReady ? 1 : 0.98 }}
-              aria-busy={opening}
-              aria-disabled={!lockerReady || opening}
+              whileHover={{ scale: downloading ? 1 : 1.05 }}
+              whileTap={{ scale: downloading ? 1 : 0.98 }}
             >
-              {opening ? (
+              {downloading ? (
                 <>
                   <span className="inline-block mr-3 h-6 w-6 animate-spin align-middle">
                     <Download className="h-6 w-6" />
                   </span>
-                  Opening locker...
-                </>
-              ) : !lockerReady ? (
-                <>
-                  <span className="inline-block mr-3 h-6 w-6 animate-spin align-middle">
-                    <Download className="h-6 w-6" />
-                  </span>
-                  Loading...
+                  PREPARING DOWNLOAD...
                 </>
               ) : (
                 <>
@@ -210,7 +174,7 @@ export default function RobloxScriptsLanding() {
           </motion.div>
         </header>
 
-        {/* Additional Features */}
+        {/* Anti-ban Features Section */}
         <motion.section
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -226,201 +190,6 @@ export default function RobloxScriptsLanding() {
           </div>
         </motion.section>
       </motion.div>
-
-      <style jsx global>{`
-        :root {
-          --primary: #00ff88;
-          --secondary: #8a2be2;
-          --accent: #00bfff;
-          --bg-dark: #0a0a0a;
-          --bg-light: #111;
-          --text: #ffffff;
-        }
-        body {
-          background-color: var(--bg-dark);
-          background-image: radial-gradient(circle at 25% 25%, rgba(138, 43, 226, 0.08), transparent 40%),
-            radial-gradient(circle at 75% 75%, rgba(0, 191, 255, 0.08), transparent 40%);
-        }
-        .particle {
-          position: absolute;
-          border-radius: 50%;
-          animation: float linear infinite;
-          will-change: transform;
-        }
-        @keyframes float {
-          0% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 0;
-          }
-          5% {
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.5;
-          }
-          90% {
-            opacity: 0.5;
-          }
-          100% {
-            transform: translateY(-100vh) rotate(360deg);
-            opacity: 0;
-          }
-        }
-        @keyframes shine {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-        .animate-shine {
-          animation: shine 2s infinite;
-          will-change: transform;
-        }
-        /* Mobile-optimized background animations */
-        .animate-gradient {
-          background-size: 400% 400%;
-          animation: gradientShift 8s ease infinite;
-        }
-        .animate-float-slow {
-          animation: floatSlow 12s ease-in-out infinite;
-        }
-        .animate-float-medium {
-          animation: floatMedium 8s ease-in-out infinite;
-        }
-        .animate-float-fast {
-          animation: floatFast 6s ease-in-out infinite;
-        }
-        .animate-pulse-slow {
-          animation: pulseSlow 4s ease-in-out infinite;
-        }
-        .animate-pulse-medium {
-          animation: pulseMedium 6s ease-in-out infinite;
-        }
-        @keyframes gradientShift {
-          0%,
-          100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        @keyframes floatSlow {
-          0%,
-          100% {
-            transform: translateY(0px) translateX(0px);
-          }
-          33% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          66% {
-            transform: translateY(-10px) translateX(-15px);
-          }
-        }
-        @keyframes floatMedium {
-          0%,
-          100% {
-            transform: translateY(0px) translateX(0px);
-          }
-          50% {
-            transform: translateY(-15px) translateX(20px);
-          }
-        }
-        @keyframes floatFast {
-          0%,
-          100% {
-            transform: translateY(0px) translateX(0px);
-          }
-          25% {
-            transform: translateY(-10px) translateX(5px);
-          }
-          50% {
-            transform: translateY(-5px) translateX(-10px);
-          }
-          75% {
-            transform: translateY(-15px) translateX(8px);
-          }
-        }
-        @keyframes pulseSlow {
-          0%,
-          100% {
-            opacity: 0.3;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.6;
-            transform: scale(1.1);
-          }
-        }
-        @keyframes pulseMedium {
-          0%,
-          100% {
-            opacity: 0.2;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.4;
-            transform: scale(1.05);
-          }
-        }
-        /* Improve animation performance */
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-        /* BUTTON STYLES - Multicolored RGB Animation for Kids */
-        .app-btn {
-          border-radius: 12px !important;
-          background: linear-gradient(90deg, #ff3b3b, #ffb300, #00ff88, #ff3b3b);
-          background-size: 200% 200%;
-          animation: none;
-          color: #fff !important;
-          font-weight: bold;
-          padding: 12px 24px;
-          border: none;
-          cursor: pointer;
-          font-size: 16px;
-          text-transform: uppercase;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-          transition: all 0.3s ease;
-          margin-top: 10px;
-          display: inline-block;
-          position: relative;
-          overflow: hidden;
-          text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-        }
-        .app-btn.app-btn-noglow {
-          animation: none !important;
-        }
-        .app-btn:hover {
-          transform: scale(1.05);
-          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
-          animation: bounce 1.5s;
-        }
-        .app-btn:active {
-          transform: scale(0.95);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-        @keyframes bounce {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-5px);
-          }
-        }
-        @keyframes redTextGlow {
-          0% {
-            text-shadow: 0 0 16px #ff3b3b, 0 2px 8px #0008, 0 0 32px #ff3b3b;
-          }
-          100% {
-            text-shadow: 0 0 32px #ff3b3bcc, 0 2px 8px #0008, 0 0 48px #ff3b3bcc;
-          }
-        }
-      `}</style>
     </div>
-  )
+  );
 }
