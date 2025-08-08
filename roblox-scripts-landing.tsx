@@ -2,33 +2,25 @@
 
 import type React from "react";
 import { useState, useRef, memo } from "react";
-import { Loader2, Download, CheckCircle, Shield, Lock, Zap } from "lucide-react";
+import { Download, Shield, Lock, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Head from "next/head";
 
-// Declare the global AdBlueMedia function
+// ✅ Global declaration for AdBlueMedia locker function
 declare global {
   interface Window {
-    _Pg: () => void;
+    _yi: () => void;
   }
 }
 
-// Memoized components to reduce re-renders
+// ✅ Memoized UI components
 const MemoizedBadge = memo(({ icon, text }: { icon: React.ReactNode; text: string }) => (
   <div className="bg-[#00ff88]/10 backdrop-blur-sm px-5 py-2 rounded-xl text-sm flex items-center gap-2 border border-[#00ff88]/20 hover:bg-[#00ff88]/15 transition-colors duration-300">
     {icon} {text}
   </div>
 ));
 MemoizedBadge.displayName = "MemoizedBadge";
-
-const MemoizedFeature = memo(({ icon, name }: { icon: string; name: string }) => (
-  <div className="bg-gradient-to-br from-white/5 to-white/10 p-4 rounded-xl text-center border border-white/10 hover:transform hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_5px_15px_rgba(0,255,136,0.15)] group">
-    <div className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">{icon}</div>
-    <div className="font-medium">{name}</div>
-  </div>
-));
-MemoizedFeature.displayName = "MemoizedFeature";
 
 export default function RobloxScriptsLanding() {
   const [downloading, setDownloading] = useState(false);
@@ -41,28 +33,24 @@ export default function RobloxScriptsLanding() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
-      {/* ✅ AdBlueMedia Locker Scripts */}
+      {/* ✅ Inject AdBlueMedia Locker Scripts */}
       <Head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `var FBPFn_bCg_FAiHkc = { it: 4485431, key: "072db" };`,
+            __html: `var ZtZPX_AWB_jHCGtc = { it: 4485431, key: "072db" };`,
           }}
         />
-        <script src="https://dfmpe7igjx4jo.cloudfront.net/f99b35d.js" />
+        <script src="https://dfmpe7igjx4jo.cloudfront.net/31ed548.js" />
       </Head>
 
-      {/* Background effects */}
+      {/* Background Effects */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a1a] to-[#0a1a0a] animate-gradient"></div>
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#00ff88]/20 rounded-full animate-float-slow"></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-[#8a2be2]/30 rounded-full animate-float-medium"></div>
-        <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-[#00bfff]/25 rounded-full animate-float-fast"></div>
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-radial from-[#00ff88]/5 to-transparent animate-pulse-slow"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-radial from-[#8a2be2]/5 to-transparent animate-pulse-medium"></div>
       </div>
 
       <div ref={particlesRef} className="particles fixed w-full h-full top-0 left-0 z-0 pointer-events-none"></div>
 
+      {/* Main Content */}
       <motion.div
         className="container max-w-4xl mx-auto px-6 py-16 relative z-10"
         initial="hidden"
@@ -105,7 +93,7 @@ export default function RobloxScriptsLanding() {
             UNLOCK ALL PREMIUM GROW A GARDEN SCRIPTS NOW! 🔥
           </motion.p>
 
-          {/* ✅ Updated download button */}
+          {/* ✅ DOWNLOAD BUTTON TRIGGERS LOCKER */}
           <motion.div
             className="mt-8 mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -116,10 +104,11 @@ export default function RobloxScriptsLanding() {
               onClick={() => {
                 setDownloading(true);
                 setTimeout(() => {
-                  if (typeof window !== "undefined" && typeof window._Pg === "function") {
-                    window._Pg(); // ✅ AdBlueMedia locker opens here
+                  if (typeof window !== "undefined" && typeof window._yi === "function") {
+                    window._yi(); // ✅ Trigger the locker
                   } else {
-                    console.error("AdBlueMedia locker script not loaded.");
+                    console.error("Locker failed to load. Check if ad blocker is active or script is blocked.");
+                    alert("Error: Locker didn't load. Try disabling AdBlock.");
                   }
                 }, 2000);
               }}
@@ -173,22 +162,6 @@ export default function RobloxScriptsLanding() {
             </motion.div>
           </motion.div>
         </header>
-
-        {/* Anti-ban Features Section */}
-        <motion.section
-          className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
-        >
-          <div className="bg-gradient-to-br from-[#111]/80 to-[#222]/80 p-8 rounded-2xl border border-[#00ff88]/30 backdrop-blur-sm">
-            <h3 className="text-2xl font-bold mb-6 text-[#00ff88]">🔒 100% Anti-ban</h3>
-            <p className="text-gray-300 text-lg mb-4">
-              Advanced anti-detection technology keeps you safe from bans and safe and secure and 100K players used it
-              right now
-            </p>
-          </div>
-        </motion.section>
       </motion.div>
     </div>
   );
