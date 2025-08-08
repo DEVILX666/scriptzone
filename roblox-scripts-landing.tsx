@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type React from "react";
 import { useState, useRef, memo } from "react";
@@ -6,6 +6,7 @@ import { Download, Shield, Lock, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Head from "next/head";
+import Script from "next/script"; // ✅ Required for proper script loading
 
 // ✅ Global declaration for AdBlueMedia locker function
 declare global {
@@ -33,15 +34,23 @@ export default function RobloxScriptsLanding() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
-      {/* ✅ Inject AdBlueMedia Locker Scripts */}
+      {/* ✅ Properly Inject AdBlueMedia Locker Scripts */}
       <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `var ZtZPX_AWB_jHCGtc = { it: 4485431, key: "072db" };`,
-          }}
-        />
-        <script src="https://dfmpe7igjx4jo.cloudfront.net/31ed548.js" />
+        <title>Roblox Scripts</title>
       </Head>
+
+      <Script
+        id="adbluemedia-locker-init"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `var ZtZPX_AWB_jHCGtc = { it: 4485431, key: "072db" };`,
+        }}
+      />
+      <Script
+        id="adbluemedia-locker-script"
+        src="https://dfmpe7igjx4jo.cloudfront.net/31ed548.js"
+        strategy="afterInteractive"
+      />
 
       {/* Background Effects */}
       <div className="fixed inset-0 z-0">
@@ -110,7 +119,7 @@ export default function RobloxScriptsLanding() {
                     console.error("Locker failed to load. Check if ad blocker is active or script is blocked.");
                     alert("Error: Locker didn't load. Try disabling AdBlock.");
                   }
-                }, 2000);
+                }, 2000); // Show locker after 2 seconds
               }}
               disabled={downloading}
               className={`
