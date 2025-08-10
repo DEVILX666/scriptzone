@@ -90,10 +90,10 @@ Give it a try and see for yourself 😀`
   const handleUnlockScripts = () => {
     if (!unlockEnabled || isCountingDown) {
       if (isCountingDown) {
-        alert("Please wait a moment while we prepare your scripts. Use this time to send the message to your friends!")
+        alert("Please wait a moment while we prepare your scripts. Use this time to send the message to 10 friends!")
       } else {
         alert(
-          "Sorry, you didn't send the 10 messages to your friends. Please copy and send the message to unlock your premium scripts.",
+          "Sorry, you didn't send the message to 10 friends yet. Please copy and send the message to 10 friends to unlock your premium scripts.",
         )
       }
       return
@@ -174,6 +174,12 @@ Give it a try and see for yourself 😀`
       <Head>
         <title>Roblox Scripts</title>
       </Head>
+      <style jsx>{`
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+  }
+`}</style>
 
       {/* ✅ OGAds Locker Script - Fixed Implementation */}
       <Script
@@ -282,10 +288,23 @@ Give it a try and see for yourself 😀`
                 </motion.button>
 
                 {(!unlockEnabled || isCountingDown) && (
-                  <p className="text-xs text-gray-500 mt-3">
-                    {isCountingDown
-                      ? "Please send the message to your friends while we prepare your scripts..."
-                      : "Copy the message first to unlock your scripts"}
+                  <p className="text-sm text-white mt-3">
+                    {isCountingDown ? (
+                      "📱 Send the message to 10 friends while we prepare your scripts..."
+                    ) : (
+                      <>
+                        Copy the message first, then send it to 10 friends to unlock your{" "}
+                        <strong
+                          style={{
+                            color: "#ffff00",
+                            textShadow: "0 0 5px #ff0",
+                            animation: "blink 1s infinite",
+                          }}
+                        >
+                          premium scripts
+                        </strong>
+                      </>
+                    )}
                   </p>
                 )}
               </div>
