@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import Script from "next/script" // Added to use Next.js Script component
+import Script from "next/script"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -26,8 +26,8 @@ export default function RootLayout({
           href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAKlBMVEVHcEyMff+Mff+Mff+Mff+Mff+Mff+Mff+Mff+Mff+Mff+Mff+Mff+Mff+DauQDAAAADnRSTlMADFUlMrlw/5X0g+On0vgqudEAAADnSURBVHgBYiAZMKILMIEIZmMgcHFxNgRUIc+IEYUBFIVvbLuKFpE2O4htl3HuQ8wdRH1s2+xiZ9YyePzndOcDEAAgkGa5QBKAidn5Zq0mFXgA/PpglMVafwKhnSaU8DlIBoLbTCDbphRvWGK7COoqOSjC4wEJARJIdgEIN6GF5KANfigh+2BDUDTJTQFaMkkZAhy8ku0iUKUcLYA/yW0I4Ev2FYkQSOZ2ixBKBV4QwGwDKo7UkxPH6cMlDCBJyhWvMOGLZF9lkWLBAimPVVAG/CUNgqj3jJR2DfwM4B/TNEDyid7ZjbYuEbNd7qs3kgsAAAAASUVORK5CYII="
           type="image/webp"
         />
-        <title>Roblox Scripts</title>
-
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4H0VRPPV5Z"
