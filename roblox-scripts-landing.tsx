@@ -26,10 +26,9 @@ export default function RobloxScriptsLanding() {
   const [isCountingDown, setIsCountingDown] = useState(false)
   const [ogAdsReady, setOgAdsReady] = useState(false)
 
-  const viralMessage = `I got premium Grow a Garden scripts 🌱 for FREE! 😲
-All I did was open Chrome or Safari and type 🔍 onmodsite 🔎
-Clicked the first site and BOOM 💥 all the premium scripts, 100% KEYLESS & Anti-Ban ✅
-Give it a try and see for yourself 😀`
+  const viralMessage = `Yo, I got premium Grow a Garden scripts for free 🔥
+All of them are 100% keyless and anti-ban.
+Get yours now before someone else gets your access 💀: https://onmod.site`
 
   const handleDownloadClick = () => {
     setDownloading(true)
