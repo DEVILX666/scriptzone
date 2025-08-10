@@ -6,14 +6,7 @@ import { Download, Shield, Lock, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Head from "next/head";
-import Script from "next/script"; // ✅ Required for proper script loading
-
-// ✅ Global declaration for AdBlueMedia locker function
-declare global {
-  interface Window {
-    _yi: () => void;
-  }
-}
+import Script from "next/script";
 
 // ✅ Memoized UI components
 const MemoizedBadge = memo(({ icon, text }: { icon: React.ReactNode; text: string }) => (
@@ -34,29 +27,21 @@ export default function RobloxScriptsLanding() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
-      {/* ✅ Properly Inject AdBlueMedia Locker Scripts */}
       <Head>
         <title>Roblox Scripts</title>
       </Head>
 
+      {/* ✅ OGAds Locker Script */}
       <Script
-        id="adbluemedia-locker-init"
+        id="ogads-locker-script"
+        src="https://installchecker.site/cl/js/2ljkdp"
         strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `var ZtZPX_AWB_jHCGtc = { it: 4485431, key: "072db" };`,
-        }}
-      />
-      <Script
-        id="adbluemedia-locker-script"
-        src="https://dfmpe7igjx4jo.cloudfront.net/31ed548.js"
-        strategy="afterInteractive"
       />
 
       {/* Background Effects */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a1a] to-[#0a1a0a] animate-gradient"></div>
       </div>
-
       <div ref={particlesRef} className="particles fixed w-full h-full top-0 left-0 z-0 pointer-events-none"></div>
 
       {/* Main Content */}
@@ -102,7 +87,7 @@ export default function RobloxScriptsLanding() {
             UNLOCK ALL PREMIUM GROW A GARDEN SCRIPTS NOW! 🔥
           </motion.p>
 
-          {/* ✅ DOWNLOAD BUTTON TRIGGERS LOCKER */}
+          {/* ✅ DOWNLOAD BUTTON TRIGGERS OGAds Locker */}
           <motion.div
             className="mt-8 mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -113,13 +98,13 @@ export default function RobloxScriptsLanding() {
               onClick={() => {
                 setDownloading(true);
                 setTimeout(() => {
-                  if (typeof window !== "undefined" && typeof window._yi === "function") {
-                    window._yi(); // ✅ Trigger the locker
+                  if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
+                    (window as any).og_load();
                   } else {
-                    console.error("Locker failed to load. Check if ad blocker is active or script is blocked.");
+                    console.error("OGAds locker failed to load.");
                     alert("Error: Locker didn't load. Try disabling AdBlock.");
                   }
-                }, 2000); // Show locker after 2 seconds
+                }, 2000);
               }}
               disabled={downloading}
               className={`
