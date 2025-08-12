@@ -89,10 +89,10 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
   const handleUnlockScripts = () => {
     if (!unlockEnabled || isCountingDown) {
       if (isCountingDown) {
-        alert("Please wait a moment while we prepare your scripts. Use this time to send the message to 10 friends!")
+        alert("Please wait a moment while we prepare your scripts. Use this time to send the message to 5 friends!")
       } else {
         alert(
-          "Sorry, you didn't send the message to 10 friends yet. Please copy and send the message to 10 friends to unlock your premium scripts.",
+          "Sorry, you didn't send the message to 5 friends yet. Please copy and send the message to 5 friends to unlock your premium scripts.",
         )
       }
       return
