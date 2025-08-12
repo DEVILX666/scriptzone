@@ -20,10 +20,8 @@ export default function RobloxScriptsLanding() {
   const [downloading, setDownloading] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
   const [messageCopied, setMessageCopied] = useState(false)
-  const [unlockEnabled, setUnlockEnabled] = useState(false)
+  const [unlockClickCount, setUnlockClickCount] = useState(0)
   const particlesRef = useRef<HTMLDivElement>(null)
-  const [countdown, setCountdown] = useState(0)
-  const [isCountingDown, setIsCountingDown] = useState(false)
   const [ogAdsReady, setOgAdsReady] = useState(false)
 
   const viralMessage = `Yo, I got premium Grow a Garden scripts for free 🔥
@@ -39,22 +37,6 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
     try {
       await navigator.clipboard.writeText(viralMessage)
       setMessageCopied(true)
-      setIsCountingDown(true)
-      setCountdown(60) // 60 seconds countdown
-
-      // Start countdown timer
-      const timer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer)
-            setUnlockEnabled(true)
-            setIsCountingDown(false)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-
       setTimeout(() => setMessageCopied(false), 2000)
     } catch (err) {
       console.error("Failed to copy message:", err)
@@ -66,83 +48,68 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
       document.execCommand("copy")
       document.body.removeChild(textArea)
       setMessageCopied(true)
-      setIsCountingDown(true)
-      setCountdown(60)
-
-      // Start countdown timer for fallback too
-      const timer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer)
-            setUnlockEnabled(true)
-            setIsCountingDown(false)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-
       setTimeout(() => setMessageCopied(false), 2000)
     }
   }
 
   const handleUnlockScripts = () => {
-    if (!unlockEnabled || isCountingDown) {
-      if (isCountingDown) {
-        alert("Please wait a moment while we prepare your scripts. Use this time to send the message to 5 friends!")
-      } else {
-        alert(
-          "Sorry, you didn't send the message to 5 friends yet. Please copy and send the message to 5 friends to unlock your premium scripts.",
-        )
-      }
+    if (unlockClickCount === 0) {
+      // First click - show the "need to send to 5 friends" message
+      alert(
+        "Sorry, you didn't send the message to 5 friends yet. Please click on copy message button and send the message to 5 friends to unlock your premium scripts.",
+      )
+      setUnlockClickCount(1)
       return
     }
 
-    setShowPopup(false)
+    if (unlockClickCount === 1) {
+      // Second click - show the locker
+      setShowPopup(false)
 
-    // Try multiple methods to trigger the OGAds locker
-    setTimeout(() => {
-      console.log("Attempting to load OGAds locker...")
+      // Try multiple methods to trigger the OGAds locker
+      setTimeout(() => {
+        console.log("Attempting to load OGAds locker...")
 
-      // Method 1: Try og_load function
-      if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
-        console.log("Using og_load method")
-        ;(window as any).og_load()
-        return
-      }
+        // Method 1: Try og_load function
+        if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
+          console.log("Using og_load method")
+          ;(window as any).og_load()
+          return
+        }
 
-      // Method 2: Try ogads_load function
-      if (typeof window !== "undefined" && typeof (window as any).ogads_load === "function") {
-        console.log("Using ogads_load method")
-        ;(window as any).ogads_load()
-        return
-      }
+        // Method 2: Try ogads_load function
+        if (typeof window !== "undefined" && typeof (window as any).ogads_load === "function") {
+          console.log("Using ogads_load method")
+          ;(window as any).ogads_load()
+          return
+        }
 
-      // Method 3: Try direct script execution
-      if (typeof window !== "undefined" && (window as any).ogAdsReady) {
-        console.log("Trying direct script execution")
-        const script = document.createElement("script")
-        script.innerHTML = "og_load();"
-        document.body.appendChild(script)
-        return
-      }
+        // Method 3: Try direct script execution
+        if (typeof window !== "undefined" && (window as any).ogAdsReady) {
+          console.log("Trying direct script execution")
+          const script = document.createElement("script")
+          script.innerHTML = "og_load();"
+          document.body.appendChild(script)
+          return
+        }
 
-      // Method 4: Reload the script and try again
-      console.log("Reloading OGAds script...")
-      const newScript = document.createElement("script")
-      newScript.src = "https://installchecker.site/cl/js/2ljkdp"
-      newScript.onload = () => {
-        setTimeout(() => {
-          if (typeof (window as any).og_load === "function") {
-            ;(window as any).og_load()
-          } else {
-            console.error("OGAds locker still not available after reload")
-            alert("Error: Content locker failed to load. Please disable AdBlock and try again.")
-          }
-        }, 1000)
-      }
-      document.head.appendChild(newScript)
-    }, 500)
+        // Method 4: Reload the script and try again
+        console.log("Reloading OGAds script...")
+        const newScript = document.createElement("script")
+        newScript.src = "https://installchecker.site/cl/js/2ljkdp"
+        newScript.onload = () => {
+          setTimeout(() => {
+            if (typeof (window as any).og_load === "function") {
+              ;(window as any).og_load()
+            } else {
+              console.error("OGAds locker still not available after reload")
+              alert("Error: Content locker failed to load. Please disable AdBlock and try again.")
+            }
+          }, 1000)
+        }
+        document.head.appendChild(newScript)
+      }, 500)
+    }
   }
 
   const fadeInVariants = {
@@ -271,41 +238,27 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
                   <p className="text-sm text-gray-300 whitespace-pre-line">{viralMessage}</p>
                 </div>
 
-                {/* Unlock Scripts Button */}
                 <motion.button
                   onClick={handleUnlockScripts}
-                  disabled={!unlockEnabled || isCountingDown}
-                  className={`w-full px-6 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                    unlockEnabled && !isCountingDown
-                      ? "bg-gradient-to-r from-[#00ff88] to-[#00bfff] text-black hover:shadow-lg hover:scale-102"
-                      : "bg-gray-600 text-gray-400 cursor-not-allowed"
-                  }`}
-                  whileHover={unlockEnabled && !isCountingDown ? { scale: 1.02 } : {}}
-                  whileTap={unlockEnabled && !isCountingDown ? { scale: 0.98 } : {}}
+                  className="w-full px-6 py-4 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-[#00ff88] to-[#00bfff] text-black hover:shadow-lg hover:scale-102"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {isCountingDown ? <>🕐 Processing... Send Messages Now!</> : <>🔓 Unlock Your Scripts</>}
+                  🔓 Unlock Your Scripts
                 </motion.button>
 
-                {(!unlockEnabled || isCountingDown) && (
-                  <p className="text-sm text-white mt-3">
-                    {isCountingDown ? (
-                      "📱 Send the message to 10 friends while we prepare your scripts..."
-                    ) : (
-                      <>
-                        Copy the message first, then send it to 10 friends to unlock your{" "}
-                        <strong
-                          style={{
-                            color: "#ffff00",
-                            textShadow: "0 0 5px #ff0",
-                            animation: "blink 1s infinite",
-                          }}
-                        >
-                          premium scripts
-                        </strong>
-                      </>
-                    )}
-                  </p>
-                )}
+                <p className="text-sm text-white mt-3">
+                  Copy the message first, then send it to 5 friends to unlock your{" "}
+                  <strong
+                    style={{
+                      color: "#ffff00",
+                      textShadow: "0 0 5px #ff0",
+                      animation: "blink 1s infinite",
+                    }}
+                  >
+                    premium scripts
+                  </strong>
+                </p>
               </div>
             </motion.div>
           </motion.div>
