@@ -96,7 +96,7 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
         // Method 4: Reload the script and try again
         console.log("Reloading OGAds script...")
         const newScript = document.createElement("script")
-        newScript.src = "https://installchecker.site/cl/js/2ljkdp"
+        newScript.src = "https://installchecker.com/cl/i/m521m8"
         newScript.onload = () => {
           setTimeout(() => {
             if (typeof (window as any).og_load === "function") {
