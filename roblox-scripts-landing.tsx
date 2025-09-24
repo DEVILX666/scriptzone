@@ -54,7 +54,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
   const handleUnlockScripts = () => {
     if (unlockClickCount === 0) {
       alert(
-        "Sorry, you didn’t send the message to 5 friends yet. Please click on copy message button and send the message to 5 friends to unlock your premium scripts.",
+        "Sorry, you didn’t send the message to 5 friends yet. Please click on copy message button and send the message to 3 friends to unlock your premium scripts.",
       )
       setUnlockClickCount(1)
       return
@@ -228,7 +228,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
                 </motion.button>
 
                 <p className="text-sm text-white mt-3">
-                  Copy the message first, then send it to 5 friends to unlock your{" "}
+                  Copy the message first, then share it with 3 friends who play this game to unlock your{" "}
                   <strong
                     style={{
                       color: "#ffff00",
