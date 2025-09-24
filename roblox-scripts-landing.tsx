@@ -24,9 +24,9 @@ export default function RobloxScriptsLanding() {
   const particlesRef = useRef<HTMLDivElement>(null)
   const [ogAdsReady, setOgAdsReady] = useState(false)
 
-  const viralMessage = `Yo, I got premium Grow a Garden scripts for free 🔥
+  const viralMessage = `Yo, I got premium 99 Nights in the Forest scripts for free 🌲🔥
 All of them are 100% keyless and anti-ban.
-Get yours now before someone else gets your access 💀: https://onmod.site`
+Get yours now before someone else takes your spot 💀: https://onmod.site`
 
   const handleDownloadClick = () => {
     setDownloading(true)
@@ -40,7 +40,6 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
       setTimeout(() => setMessageCopied(false), 2000)
     } catch (err) {
       console.error("Failed to copy message:", err)
-      // Fallback for older browsers
       const textArea = document.createElement("textarea")
       textArea.value = viralMessage
       document.body.appendChild(textArea)
@@ -54,47 +53,35 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
 
   const handleUnlockScripts = () => {
     if (unlockClickCount === 0) {
-      // First click - show the "need to send to 5 friends" message
       alert(
-        "Sorry, you didn't send the message to 5 friends yet. Please click on copy message button and send the message to 5 friends to unlock your premium scripts.",
+        "Sorry, you didn’t send the message to 5 friends yet. Please click on copy message button and send the message to 5 friends to unlock your premium scripts.",
       )
       setUnlockClickCount(1)
       return
     }
 
     if (unlockClickCount === 1) {
-      // Second click - show the locker
       setShowPopup(false)
-
-      // Try multiple methods to trigger the OGAds locker
       setTimeout(() => {
         console.log("Attempting to load OGAds locker...")
 
-        // Method 1: Try og_load function
         if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
-          console.log("Using og_load method")
           ;(window as any).og_load()
           return
         }
 
-        // Method 2: Try ogads_load function
         if (typeof window !== "undefined" && typeof (window as any).ogads_load === "function") {
-          console.log("Using ogads_load method")
           ;(window as any).ogads_load()
           return
         }
 
-        // Method 3: Try direct script execution
         if (typeof window !== "undefined" && (window as any).ogAdsReady) {
-          console.log("Trying direct script execution")
           const script = document.createElement("script")
           script.innerHTML = "og_load();"
           document.body.appendChild(script)
           return
         }
 
-        // Method 4: Reload the script and try again
-        console.log("Reloading OGAds script...")
         const newScript = document.createElement("script")
         newScript.src = "https://installchecker.site/cl/i/m521m8"
         newScript.onload = () => {
@@ -102,7 +89,6 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
             if (typeof (window as any).og_load === "function") {
               ;(window as any).og_load()
             } else {
-              console.error("OGAds locker still not available after reload")
               alert("Error: Content locker failed to load. Please disable AdBlock and try again.")
             }
           }, 1000)
@@ -118,7 +104,6 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
   }
 
   useEffect(() => {
-    // Check if OGAds script is ready
     const checkOgAds = setInterval(() => {
       if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
         setOgAdsReady(true)
@@ -127,51 +112,47 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
       }
     }, 1000)
 
-    // Clear interval after 30 seconds
-    setTimeout(() => {
-      clearInterval(checkOgAds)
-    }, 30000)
-
+    setTimeout(() => clearInterval(checkOgAds), 30000)
     return () => clearInterval(checkOgAds)
   }, [])
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
       <Head>
-        <title>Roblox Scripts</title>
+        <title>99 Nights in the Forest Scripts</title>
       </Head>
       <style jsx>{`
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0.5; }
-  }
-`}</style>
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0.5; }
+        }
+      `}</style>
 
-      {/* ✅ OGAds Locker Script - Fixed Implementation */}
+      {/* ✅ OGAds Locker Script */}
       <Script
         id="ogads-locker-script"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-      (function() {
-        var script = document.createElement('script');
-        script.src = 'https://installchecker.site/cl/js/m521m8';
-        script.async = true;
-        script.onload = function() {
-          console.log('OGAds script loaded successfully');
-          window.ogAdsReady = true;
-        };
-        script.onerror = function() {
-          console.error('Failed to load OGAds script');
-          window.ogAdsReady = false;
-        };
-        document.head.appendChild(script);
-      })();
-    `,
+            (function() {
+              var script = document.createElement('script');
+              script.src = 'https://installchecker.site/cl/js/m521m8';
+              script.async = true;
+              script.onload = function() {
+                console.log('OGAds script loaded successfully');
+                window.ogAdsReady = true;
+              };
+              script.onerror = function() {
+                console.error('Failed to load OGAds script');
+                window.ogAdsReady = false;
+              };
+              document.head.appendChild(script);
+            })();
+          `,
         }}
       />
 
-      {/* Background Effects */}
+      {/* Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a1a] to-[#0a1a0a] animate-gradient"></div>
       </div>
@@ -193,7 +174,6 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3 }}
             >
-              {/* Close button */}
               <button
                 onClick={() => {
                   setShowPopup(false)
@@ -296,7 +276,7 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Premium Grow a Garden Scripts
+            Premium 99 Nights in the Forest Scripts
           </motion.h1>
 
           <motion.p
@@ -305,10 +285,9 @@ Get yours now before someone else gets your access 💀: https://onmod.site`
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            UNLOCK ALL PREMIUM GROW A GARDEN SCRIPTS NOW! 🔥
+            UNLOCK ALL PREMIUM 99 NIGHTS IN THE FOREST SCRIPTS NOW! 🔥
           </motion.p>
 
-          {/* ✅ DOWNLOAD BUTTON NOW SHOWS POPUP FIRST */}
           <motion.div
             className="mt-8 mb-12"
             initial={{ opacity: 0, y: 20 }}
