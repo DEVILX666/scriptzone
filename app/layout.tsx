@@ -7,9 +7,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Grow a Garden Scripts | Roblox Tools & Boosts",
+  title: "99 Nights in the Forest Scripts | Roblox Cheats & Tools",
   description:
-    "Unlock Grow a Garden scripts: Dupe Items, Pet Spawner, Auto Farm, EGG-ESP, Auto Harvest, 120FPS Boost, Infinite Seeds, Item Stealer & more!",
+    "Unlock 99 Nights in the Forest scripts: Infinite Diamonds, Auto Farm, ESP, God Mode, Pet Spawner, Teleport Hacks, Fast Level Up, FPS Boost & more! The ultimate toolbox for Roblox forest survival.",
   generator: "v0.dev",
 }
 
@@ -28,17 +28,32 @@ export default function RootLayout({
         />
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        {/* Google Analytics */}
+
+        {/* Google Analytics (old property) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4H0VRPPV5Z"
           strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics-old" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-4H0VRPPV5Z');
+          `}
+        </Script>
+
+        {/* Google Analytics (new property G-C68DXVJ2PZ) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-C68DXVJ2PZ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics-new" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-C68DXVJ2PZ');
           `}
         </Script>
       </head>
