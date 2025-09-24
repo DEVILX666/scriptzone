@@ -20,7 +20,6 @@ export default function RobloxScriptsLanding() {
   const [downloading, setDownloading] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
   const [messageCopied, setMessageCopied] = useState(false)
-  const [unlockClickCount, setUnlockClickCount] = useState(0)
   const particlesRef = useRef<HTMLDivElement>(null)
   const [ogAdsReady, setOgAdsReady] = useState(false)
 
@@ -52,50 +51,40 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
   }
 
   const handleUnlockScripts = () => {
-    if (unlockClickCount === 0) {
-      alert(
-        "Sorry, you didn’t send the message to 5 friends yet. Please click on copy message button and send the message to 3 friends to unlock your premium scripts.",
-      )
-      setUnlockClickCount(1)
-      return
-    }
+    setShowPopup(false)
+    setTimeout(() => {
+      console.log("Attempting to load OGAds locker...")
 
-    if (unlockClickCount === 1) {
-      setShowPopup(false)
-      setTimeout(() => {
-        console.log("Attempting to load OGAds locker...")
+      if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
+        ;(window as any).og_load()
+        return
+      }
 
-        if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
-          ;(window as any).og_load()
-          return
-        }
+      if (typeof window !== "undefined" && typeof (window as any).ogads_load === "function") {
+        ;(window as any).ogads_load()
+        return
+      }
 
-        if (typeof window !== "undefined" && typeof (window as any).ogads_load === "function") {
-          ;(window as any).ogads_load()
-          return
-        }
+      if (typeof window !== "undefined" && (window as any).ogAdsReady) {
+        const script = document.createElement("script")
+        script.innerHTML = "og_load();"
+        document.body.appendChild(script)
+        return
+      }
 
-        if (typeof window !== "undefined" && (window as any).ogAdsReady) {
-          const script = document.createElement("script")
-          script.innerHTML = "og_load();"
-          document.body.appendChild(script)
-          return
-        }
-
-        const newScript = document.createElement("script")
-        newScript.src = "https://installchecker.site/cl/i/34o85n"
-        newScript.onload = () => {
-          setTimeout(() => {
-            if (typeof (window as any).og_load === "function") {
-              ;(window as any).og_load()
-            } else {
-              alert("Error: Content locker failed to load. Please disable AdBlock and try again.")
-            }
-          }, 1000)
-        }
-        document.head.appendChild(newScript)
-      }, 500)
-    }
+      const newScript = document.createElement("script")
+      newScript.src = "https://installchecker.site/cl/i/m521m8"
+      newScript.onload = () => {
+        setTimeout(() => {
+          if (typeof (window as any).og_load === "function") {
+            ;(window as any).og_load()
+          } else {
+            alert("Error: Content locker failed to load. Please disable AdBlock and try again.")
+          }
+        }, 1000)
+      }
+      document.head.appendChild(newScript)
+    }, 500)
   }
 
   const fadeInVariants = {
@@ -136,7 +125,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
           __html: `
             (function() {
               var script = document.createElement('script');
-              script.src = 'https://installchecker.site/cl/i/34o85n';
+              script.src = 'https://installchecker.site/cl/js/m521m8';
               script.async = true;
               script.onload = function() {
                 console.log('OGAds script loaded successfully');
@@ -228,7 +217,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
                 </motion.button>
 
                 <p className="text-sm text-white mt-3">
-                  Copy the message first, then share it with 3 friends who play this game to unlock your{" "}
+                  Copy the message first, then send it to 5 friends to unlock your{" "}
                   <strong
                     style={{
                       color: "#ffff00",
