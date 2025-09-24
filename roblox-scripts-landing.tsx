@@ -83,7 +83,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
         }
 
         const newScript = document.createElement("script")
-        newScript.src = "https://installchecker.site/cl/i/m521m8"
+        newScript.src = "https://installchecker.site/cl/i/34o85n"
         newScript.onload = () => {
           setTimeout(() => {
             if (typeof (window as any).og_load === "function") {
@@ -136,7 +136,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
           __html: `
             (function() {
               var script = document.createElement('script');
-              script.src = 'https://installchecker.site/cl/js/m521m8';
+              script.src = 'https://installchecker.site/cl/i/34o85n';
               script.async = true;
               script.onload = function() {
                 console.log('OGAds script loaded successfully');
