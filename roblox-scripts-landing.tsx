@@ -22,10 +22,12 @@ export default function RobloxScriptsLanding() {
   const [messageCopied, setMessageCopied] = useState(false)
   const particlesRef = useRef<HTMLDivElement>(null)
   const [ogAdsReady, setOgAdsReady] = useState(false)
+  const [unlockDisabled, setUnlockDisabled] = useState(true)
+  const unlockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const viralMessage = `Yo, I got premium 99 Nights in the Forest scripts for free 🌲🔥
 All of them are 100% keyless and anti-ban.
-Get yours now before someone else takes your spot 💀: https://scriptzone.vercel.app/`
+Get yours now before someone else takes your spot 💀: https://onmod.site`
 
   const handleDownloadClick = () => {
     setDownloading(true)
@@ -37,6 +39,13 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
       await navigator.clipboard.writeText(viralMessage)
       setMessageCopied(true)
       setTimeout(() => setMessageCopied(false), 2000)
+
+      // Start 10s cooldown before enabling Unlock button
+      setUnlockDisabled(true)
+      if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current)
+      unlockTimerRef.current = setTimeout(() => {
+        setUnlockDisabled(false)
+      }, 10000)
     } catch (err) {
       console.error("Failed to copy message:", err)
       const textArea = document.createElement("textarea")
@@ -47,6 +56,13 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
       document.body.removeChild(textArea)
       setMessageCopied(true)
       setTimeout(() => setMessageCopied(false), 2000)
+
+      // Start 10s cooldown even if fallback copy method is used
+      setUnlockDisabled(true)
+      if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current)
+      unlockTimerRef.current = setTimeout(() => {
+        setUnlockDisabled(false)
+      }, 10000)
     }
   }
 
@@ -102,7 +118,12 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
     }, 1000)
 
     setTimeout(() => clearInterval(checkOgAds), 30000)
-    return () => clearInterval(checkOgAds)
+    return () => {
+      clearInterval(checkOgAds)
+      if (unlockTimerRef.current) {
+        clearTimeout(unlockTimerRef.current)
+      }
+    }
   }, [])
 
   return (
@@ -213,9 +234,15 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
 
                 <motion.button
                   onClick={handleUnlockScripts}
-                  className="w-full px-6 py-4 rounded-xl font-semibold transition-all duration-300 bg-gradient-to-r from-[#00ff88] to-[#00bfff] text-black hover:shadow-lg hover:scale-102"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={unlockDisabled}
+                  aria-disabled={unlockDisabled}
+                  className={`w-full px-6 py-4 rounded-xl font-semibold transition-all duration-300 ${
+                    unlockDisabled
+                      ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-[#00ff88] to-[#00bfff] text-black hover:shadow-lg"
+                  }`}
+                  whileHover={{ scale: unlockDisabled ? 1 : 1.02 }}
+                  whileTap={{ scale: unlockDisabled ? 1 : 0.98 }}
                 >
                   🔓 Unlock Your Scripts
                 </motion.button>
