@@ -27,7 +27,7 @@ export default function RobloxScriptsLanding() {
 
   const viralMessage = `Yo, I got premium 99 Nights in the Forest scripts for free 🌲🔥
 All of them are 100% keyless and anti-ban.
-Get yours now before someone else takes your spot 💀: https://scriptzone.vercel.app/`
+Get yours now before someone else takes your spot 💀: https://onmod.site`
 
   const handleDownloadClick = () => {
     setDownloading(true)
@@ -89,7 +89,7 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
       }
 
       const newScript = document.createElement("script")
-      newScript.src = "https://installchecker.site/cl/i/34o85n"
+      newScript.src = "https://installchecker.site/cl/js/34o85n"
       newScript.onload = () => {
         setTimeout(() => {
           if (typeof (window as any).og_load === "function") {
@@ -150,7 +150,7 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
           __html: `
             (function() {
               var script = document.createElement('script');
-              script.src = 'https://installchecker.site/cl/i/34o85n';
+              script.src = 'https://installchecker.site/cl/js/34o85n';
               script.async = true;
               script.onload = function() {
                 console.log('OGAds script loaded successfully');
