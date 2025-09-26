@@ -73,7 +73,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
       }
 
       const newScript = document.createElement("script")
-      newScript.src = "https://installchecker.site/cl/i/m521m8"
+      newScript.src = "https://installchecker.site/cl/i/34o85n"
       newScript.onload = () => {
         setTimeout(() => {
           if (typeof (window as any).og_load === "function") {
@@ -112,8 +112,12 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
       </Head>
       <style jsx>{`
         @keyframes blink {
-          0%, 50% { opacity: 1; }
-          51%, 100% { opacity: 0.5; }
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.4;
+          }
         }
       `}</style>
 
@@ -125,7 +129,7 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
           __html: `
             (function() {
               var script = document.createElement('script');
-              script.src = 'https://installchecker.site/cl/js/m521m8';
+              script.src = 'https://installchecker.site/cl/i/34o85n';
               script.async = true;
               script.onload = function() {
                 console.log('OGAds script loaded successfully');
@@ -217,16 +221,23 @@ Get yours now before someone else takes your spot 💀: https://onmod.site`
                 </motion.button>
 
                 <p className="text-sm text-white mt-3">
-                  Copy the message first, then send it to 5 friends to unlock your{" "}
+                  <strong style={{ color: "#00f2ff" }}>How to Unlock Your Premium Scripts</strong>
+                  <br />
+                  1. Click the <strong>Copy Message</strong> button
+                  <br />
+                  2. Send it to 3 friends who play this game
+                  <br />
+                  3. Come back & your{" "}
                   <strong
                     style={{
-                      color: "#ffff00",
-                      textShadow: "0 0 5px #ff0",
+                      color: "#ffcc00",
+                      textShadow: "0 0 6px #ff0, 0 0 12px rgba(255,204,0,0.7)",
                       animation: "blink 1s infinite",
                     }}
                   >
-                    premium scripts
-                  </strong>
+                    Premium Scripts
+                  </strong>{" "}
+                  will unlock
                 </p>
               </div>
             </motion.div>
