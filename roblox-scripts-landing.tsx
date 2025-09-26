@@ -25,7 +25,7 @@ export default function RobloxScriptsLanding() {
 
   const viralMessage = `Yo, I got premium 99 Nights in the Forest scripts for free 🌲🔥
 All of them are 100% keyless and anti-ban.
-Get yours now before someone else takes your spot 💀: https://onmod.site`
+Get yours now before someone else takes your spot 💀: https://scriptzone.vercel.app/`
 
   const handleDownloadClick = () => {
     setDownloading(true)
