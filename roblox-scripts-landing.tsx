@@ -2,8 +2,8 @@
 
 import type React from "react"
 import { useState, useRef, memo, useEffect } from "react"
-import { Download, Shield, Lock, Zap, Copy, Check } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { Download, Shield, Lock, Zap } from "lucide-react"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import Head from "next/head"
 import Script from "next/script"
@@ -18,56 +18,12 @@ MemoizedBadge.displayName = "MemoizedBadge"
 
 export default function RobloxScriptsLanding() {
   const [downloading, setDownloading] = useState(false)
-  const [showPopup, setShowPopup] = useState(false)
-  const [messageCopied, setMessageCopied] = useState(false)
   const particlesRef = useRef<HTMLDivElement>(null)
   const [ogAdsReady, setOgAdsReady] = useState(false)
-  const [unlockDisabled, setUnlockDisabled] = useState(true)
-  const unlockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const viralMessage = `Yo, I got premium 99 Nights in the Forest scripts for free 🌲🔥
-All of them are 100% keyless and anti-ban.
-Get yours now before someone else takes your spot 💀: https://scriptzone.vercel.app/`
 
   const handleDownloadClick = () => {
     setDownloading(true)
-    setShowPopup(true)
-  }
-
-  const handleCopyMessage = async () => {
-    try {
-      await navigator.clipboard.writeText(viralMessage)
-      setMessageCopied(true)
-      setTimeout(() => setMessageCopied(false), 2000)
-
-      // Start 10s cooldown before enabling Unlock button
-      setUnlockDisabled(true)
-      if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current)
-      unlockTimerRef.current = setTimeout(() => {
-        setUnlockDisabled(false)
-      }, 10000)
-    } catch (err) {
-      console.error("Failed to copy message:", err)
-      const textArea = document.createElement("textarea")
-      textArea.value = viralMessage
-      document.body.appendChild(textArea)
-      textArea.select()
-      document.execCommand("copy")
-      document.body.removeChild(textArea)
-      setMessageCopied(true)
-      setTimeout(() => setMessageCopied(false), 2000)
-
-      // Start 10s cooldown even if fallback copy method is used
-      setUnlockDisabled(true)
-      if (unlockTimerRef.current) clearTimeout(unlockTimerRef.current)
-      unlockTimerRef.current = setTimeout(() => {
-        setUnlockDisabled(false)
-      }, 10000)
-    }
-  }
-
-  const handleUnlockScripts = () => {
-    setShowPopup(false)
+    // Direct redirect to locker with 2-second delay
     setTimeout(() => {
       console.log("Attempting to load OGAds locker...")
 
@@ -100,7 +56,7 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
         }, 1000)
       }
       document.head.appendChild(newScript)
-    }, 500)
+    }, 2000)
   }
 
   const fadeInVariants = {
@@ -120,9 +76,6 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
     setTimeout(() => clearInterval(checkOgAds), 30000)
     return () => {
       clearInterval(checkOgAds)
-      if (unlockTimerRef.current) {
-        clearTimeout(unlockTimerRef.current)
-      }
     }
   }, [])
 
@@ -172,105 +125,6 @@ Get yours now before someone else takes your spot 💀: https://scriptzone.verce
       </div>
       <div ref={particlesRef} className="particles fixed w-full h-full top-0 left-0 z-0 pointer-events-none"></div>
 
-      {/* Popup Modal */}
-      <AnimatePresence>
-        {showPopup && (
-          <motion.div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-[#1a1a1a] border border-[#00ff88]/20 rounded-2xl p-8 max-w-md w-full mx-4 relative"
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <button
-                onClick={() => {
-                  setShowPopup(false)
-                  setDownloading(false)
-                }}
-                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
-              >
-                ✕
-              </button>
-
-              <div className="text-center">
-                <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-[#8a2be2] via-[#00bfff] to-[#00ff88] bg-clip-text text-transparent">
-                  Almost There! 🎉
-                </h3>
-
-                {/* Copy Message Button */}
-                <motion.button
-                  onClick={handleCopyMessage}
-                  className={`w-full mb-6 px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 ${
-                    messageCopied
-                      ? "bg-green-600 text-white"
-                      : "bg-gradient-to-r from-[#8a2be2] to-[#00bfff] text-white hover:shadow-lg"
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {messageCopied ? (
-                    <>
-                      <Check className="h-5 w-5" />
-                      Message Copied!
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-5 w-5" />
-                      Copy Message
-                    </>
-                  )}
-                </motion.button>
-
-                {/* Viral Message */}
-                <div className="bg-[#0a0a0a] border border-[#00ff88]/10 rounded-xl p-4 mb-6 text-left">
-                  <p className="text-sm text-gray-300 whitespace-pre-line">{viralMessage}</p>
-                </div>
-
-                <motion.button
-                  onClick={handleUnlockScripts}
-                  disabled={unlockDisabled}
-                  aria-disabled={unlockDisabled}
-                  className={`w-full px-6 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                    unlockDisabled
-                      ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-[#00ff88] to-[#00bfff] text-black hover:shadow-lg"
-                  }`}
-                  whileHover={{ scale: unlockDisabled ? 1 : 1.02 }}
-                  whileTap={{ scale: unlockDisabled ? 1 : 0.98 }}
-                >
-                  🔓 Unlock Your Scripts
-                </motion.button>
-
-                <p className="text-sm text-white mt-3">
-                  <strong style={{ color: "#00f2ff" }}>How to Unlock Your Premium Scripts</strong>
-                  <br />
-                  1. Click the <strong>Copy Message</strong> button
-                  <br />
-                  2. Send it to 3 friends who play this game
-                  <br />
-                  3. Come back & your{" "}
-                  <strong
-                    style={{
-                      color: "#ffcc00",
-                      textShadow: "0 0 6px #ff0, 0 0 12px rgba(255,204,0,0.7)",
-                      animation: "blink 1s infinite",
-                    }}
-                  >
-                    Premium Scripts
-                  </strong>{" "}
-                  will unlock
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Main Content */}
       <motion.div
