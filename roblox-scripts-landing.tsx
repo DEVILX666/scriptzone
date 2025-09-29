@@ -1,12 +1,11 @@
 "use client"
 
 import type React from "react"
-import { useState, useRef, memo, useEffect } from "react"
+import { useState, useRef, memo } from "react"
 import { Download, Shield, Lock, Zap } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Head from "next/head"
-import Script from "next/script"
 
 // ✅ Memoized UI components
 const MemoizedBadge = memo(({ icon, text }: { icon: React.ReactNode; text: string }) => (
@@ -19,44 +18,15 @@ MemoizedBadge.displayName = "MemoizedBadge"
 export default function RobloxScriptsLanding() {
   const [downloading, setDownloading] = useState(false)
   const particlesRef = useRef<HTMLDivElement>(null)
-  const [ogAdsReady, setOgAdsReady] = useState(false)
+  
 
   const handleDownloadClick = () => {
     setDownloading(true)
-    // Direct redirect to locker with 2-second delay
     setTimeout(() => {
-      console.log("Attempting to load OGAds locker...")
-
-      if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
-        ;(window as any).og_load()
-        return
+      if (typeof window !== "undefined") {
+        window.location.href = "https://unlockscripts.vercel.app/"
       }
-
-      if (typeof window !== "undefined" && typeof (window as any).ogads_load === "function") {
-        ;(window as any).ogads_load()
-        return
-      }
-
-      if (typeof window !== "undefined" && (window as any).ogAdsReady) {
-        const script = document.createElement("script")
-        script.innerHTML = "og_load();"
-        document.body.appendChild(script)
-        return
-      }
-
-      const newScript = document.createElement("script")
-      newScript.src = "https://installchecker.site/cl/js/34o85n"
-      newScript.onload = () => {
-        setTimeout(() => {
-          if (typeof (window as any).og_load === "function") {
-            ;(window as any).og_load()
-          } else {
-            alert("Error: Content locker failed to load. Please disable AdBlock and try again.")
-          }
-        }, 1000)
-      }
-      document.head.appendChild(newScript)
-    }, 2000)
+    }, 1500)
   }
 
   const fadeInVariants = {
@@ -64,20 +34,7 @@ export default function RobloxScriptsLanding() {
     visible: { opacity: 1, y: 0 },
   }
 
-  useEffect(() => {
-    const checkOgAds = setInterval(() => {
-      if (typeof window !== "undefined" && typeof (window as any).og_load === "function") {
-        setOgAdsReady(true)
-        clearInterval(checkOgAds)
-        console.log("OGAds is ready!")
-      }
-    }, 1000)
-
-    setTimeout(() => clearInterval(checkOgAds), 30000)
-    return () => {
-      clearInterval(checkOgAds)
-    }
-  }, [])
+  
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
@@ -95,29 +52,7 @@ export default function RobloxScriptsLanding() {
         }
       `}</style>
 
-      {/* ✅ OGAds Locker Script */}
-      <Script
-        id="ogads-locker-script"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function() {
-              var script = document.createElement('script');
-              script.src = 'https://installchecker.site/cl/js/34o85n';
-              script.async = true;
-              script.onload = function() {
-                console.log('OGAds script loaded successfully');
-                window.ogAdsReady = true;
-              };
-              script.onerror = function() {
-                console.error('Failed to load OGAds script');
-                window.ogAdsReady = false;
-              };
-              document.head.appendChild(script);
-            })();
-          `,
-        }}
-      />
+      
 
       {/* Background */}
       <div className="fixed inset-0 z-0">
