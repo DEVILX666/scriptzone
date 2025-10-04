@@ -7,9 +7,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "99 Nights in the Forest Scripts | Roblox Cheats & Tools",
+  title: "Plants vs Brainrot Premium Scripts for Free | Roblox Cheats & Tools",
   description:
-    "Unlock 99 Nights in the Forest scripts: Infinite Diamonds, Auto Farm, ESP, God Mode, Pet Spawner, Teleport Hacks, Fast Level Up, FPS Boost & more! The ultimate toolbox for Roblox forest survival.",
+    "Unlock Plants vs Brainrot premium scripts for free: Infinite Coins, Auto Farm, ESP, God Mode, Plant Spawner, Teleport Hacks, Fast Level Up, FPS Boost & more! The ultimate toolbox for Roblox tower defense.",
   generator: "v0.dev",
 }
 
@@ -28,32 +28,17 @@ export default function RootLayout({
         />
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-
-        {/* Google Analytics (old property) */}
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4H0VRPPV5Z"
           strategy="afterInteractive"
         />
-        <Script id="google-analytics-old" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-4H0VRPPV5Z');
-          `}
-        </Script>
-
-        {/* Google Analytics (new property G-C68DXVJ2PZ) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-C68DXVJ2PZ"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics-new" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-C68DXVJ2PZ');
           `}
         </Script>
       </head>
