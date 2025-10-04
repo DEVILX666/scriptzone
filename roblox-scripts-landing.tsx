@@ -39,7 +39,7 @@ export default function RobloxScriptsLanding() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden font-sans">
       <Head>
-        <title>99 Nights in the Forest Scripts</title>
+        <title>Plants vs Brainrot Premium Scripts for Free</title>
       </Head>
       <style jsx>{`
         @keyframes blink {
@@ -92,7 +92,7 @@ export default function RobloxScriptsLanding() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Premium 99 Nights in the Forest Scripts
+            Plants vs Brainrot Premium Scripts for Free
           </motion.h1>
 
           <motion.p
@@ -101,7 +101,7 @@ export default function RobloxScriptsLanding() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            UNLOCK ALL PREMIUM 99 NIGHTS IN THE FOREST SCRIPTS NOW! 🔥
+            UNLOCK ALL PREMIUM PLANTS VS BRAINROT SCRIPTS FOR FREE NOW! 🔥
           </motion.p>
 
           <motion.div
